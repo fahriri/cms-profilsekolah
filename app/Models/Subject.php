@@ -17,6 +17,14 @@ class Subject extends Model
         'school_id',
         'name',
     ];
+    protected static function booted()
+{
+    static::addGlobalScope('school', function ($query) {
+        if (auth()->check() && auth()->user()->role !== 'admin_pusat') {
+            $query->where('school_id', auth()->user()->school_id);
+        }
+    });
+}
 
     /**
      * Relasi ke Sekolah. 

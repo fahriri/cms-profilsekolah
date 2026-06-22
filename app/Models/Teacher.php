@@ -17,7 +17,7 @@ class Teacher extends Model
         'name', 
         'gender',    // Tambahkan ini
         'nip',
-        'photo_url'
+        'photo_url',
     ];
 
     /**

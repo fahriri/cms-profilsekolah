@@ -27,14 +27,18 @@ class GalleryResource extends Resource
     }
     
     // Query: Gunakan Global Scope dari Model Gallery
-    public static function getEloquentQuery(): Builder
-    {
-        $user = auth()->user();
-        if ($user instanceof User && $user->isSuperAdmin()) {
-            return parent::getEloquentQuery();
-        }
-        return parent::getEloquentQuery()->withoutGlobalScopes([SoftDeletingScope::class]);
+  public static function getEloquentQuery(): Builder
+{
+    $user = auth()->user();
+
+    // Jika user adalah admin_pusat, jangan filter data berdasarkan sekolah
+    if ($user && $user->role === 'admin_pusat') {
+        return parent::getEloquentQuery()->withoutGlobalScopes(); 
     }
+
+    // Untuk admin sekolah biasa, tetap tampilkan data sekolahnya saja
+    return parent::getEloquentQuery();
+}
 
     public static function form(Form $form): Form
     {
@@ -102,12 +106,12 @@ class GalleryResource extends Resource
                         'image' => 'success',
                         'video' => 'info',
                     }),
+                // Di dalam StudentResource/TeacherResource/EskulResource
                 Tables\Columns\TextColumn::make('school.name')
-                    ->visible(function () {
-                        $user = auth()->user();
-                        return $user instanceof User && $user->isSuperAdmin();
-                    })
                     ->label('Sekolah Terkait')
+                    ->visible(fn () => auth()->user()->role === 'admin_pusat') // Hanya muncul untuk Admin Pusat
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

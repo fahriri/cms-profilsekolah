@@ -4,28 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{-- Diambil dari .env jika ada, jika tidak, pakai 'CMS Padamu Negeri' --}}
-    <title>{{ config('app.name', 'CMS Padamu Negeri') }}</title>
+    <title>CMS Padamu Negeri</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* CSS Tambahan untuk memastikan FULL PAGE dan CENTERING */
-        html, body {
+        html body{
             height: 100%;
         }
         body {
             font-family: 'Inter', sans-serif;
-            /* Enhanced gradient background with subtle pattern */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             background-attachment: fixed;
-            /* Memastikan semua konten di tengah secara vertikal dan horizontal */
             display: flex;
+            flex-direction: column; /* Mengatur susunan ke bawah */
             align-items: center;
-            justify-content: center;
-            margin: 0;
+            justify-content: flex-start; /* Perbaikan agar tidak mental saat scroll */            margin: 0;
             padding: 20px;
             position: relative;
-            overflow: hidden;
+            
+            /* UBAH DUA BARIS INI */
+            min-height: 100%; /* Ganti dari height: 100% */
+            overflow-y: auto; /* Ganti dari overflow: hidden */
         }
         /* Subtle background pattern */
         body::before {
@@ -129,6 +130,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        .footer-text { color: rgba(255, 255, 255, 0.9); z-index: 1; }
     </style>
 </head>
 <body class="antialiased">
@@ -146,12 +148,12 @@
                 Platform Pembuatan Web Profil Sekolah
             </h2>
             <p class="text-lg text-gray-500 leading-relaxed">
-                Domain utama platform Anda diakses. Kelola dan tampilkan profil sekolah dengan mudah dan profesional.
+                Bangun identitas sekolah Anda dalam sekejap. Kelola konten, galeri, dan data siswa tanpa perlu keahlian teknis khusus.
             </p>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
-            <a href="{{ route('login') }}"
+            <a href="/admin/login"
                class="btn-hover inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-2xl shadow-lg text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                 <i class="fas fa-sign-in-alt mr-2"></i>
                 Login Admin
@@ -188,6 +190,18 @@
             </div>
         @endif
 
+    </div>
+    <div class="footer-text text-center space-y-4 pb-10">
+        <div class="flex justify-center space-x-6 text-2xl mb-4">
+            <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="font-medium">© {{ date('Y') }} CMS Padamu Negeri - All Rights Reserved</p>
+        <div class="text-sm opacity-80 space-y-1">
+            <p><i class="fas fa-envelope mr-2"></i> support@padamunegeri.id</p>
+            <p><i class="fas fa-map-marker-alt mr-2"></i> Jakarta, Indonesia</p>
+        </div>
     </div>
 </body>
 </html>

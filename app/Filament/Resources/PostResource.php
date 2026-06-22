@@ -32,20 +32,17 @@ class PostResource extends Resource
     
     // 2. Modifikasi getEloquentQuery untuk memfilter data
     public static function getEloquentQuery(): Builder
-    {
-        $user = auth()->user();
-        
-        // Jika pengguna adalah Super Admin, tampilkan SEMUA data
-        if ($user instanceof User && $user->isSuperAdmin()) {
-            return parent::getEloquentQuery();
-        }
+{
+    $user = auth()->user();
 
-        // Jika pengguna adalah Admin Sekolah, Global Scope di model Post akan secara otomatis memfilter.
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+    // Jika user adalah admin_pusat, jangan filter data berdasarkan sekolah
+    if ($user && $user->role === 'admin_pusat') {
+        return parent::getEloquentQuery()->withoutGlobalScopes(); 
     }
+
+    // Untuk admin sekolah biasa, tetap tampilkan data sekolahnya saja
+    return parent::getEloquentQuery();
+}
 
     public static function form(Form $form): Form
     {
@@ -57,6 +54,12 @@ class PostResource extends Resource
                 Forms\Components\Textarea::make('content')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\FileUpload::make('photo_url') // Nama harus sama dengan di migrasi
+                    ->label('Foto Berita')
+                    ->image()
+                    ->directory('posts')
+                    ->disk('public')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -66,14 +69,15 @@ class PostResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('school.name') // Tampilkan nama sekolah
-                    // SOLUSI SINTAKS AMAN: Menggunakan closure dan type casting penuh
-                    ->visible(function () {
-                        $user = auth()->user();
-                        // Type casting untuk menghindari eror "Undefined Method" di editor
-                        return $user instanceof User && $user->isSuperAdmin();
-                    })
+                // Di dalam StudentResource/TeacherResource/EskulResource
+                Tables\Columns\TextColumn::make('school.name')
                     ->label('Sekolah Terkait')
+                    ->visible(fn () => auth()->user()->role === 'admin_pusat') // Hanya muncul untuk Admin Pusat
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('photo_url')
+                    ->label('Foto')
+                    ->circular(), // Menggunakan gaya bulat agar senada dengan TeacherResource Anda
             ])
             ->filters([
                 //

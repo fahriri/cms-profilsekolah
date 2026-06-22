@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BelongsToTenant; // Wajib
 
+// app/Models/Student.php
+
 class Student extends Model
 {
-    use HasFactory, BelongsToTenant; // Terapkan Trait
+    use HasFactory, BelongsToTenant;
 
     protected $fillable = [
-        'school_id', // Wajib untuk Trait
+        'school_id',
         'name', 
         'nisn', 
         'class',
@@ -19,4 +21,10 @@ class Student extends Model
         'photo_url', 
         'status',
     ];
+
+    // Tambahkan ini agar bisa memanggil $student->school->name
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
 }

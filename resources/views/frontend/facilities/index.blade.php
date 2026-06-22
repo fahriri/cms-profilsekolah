@@ -12,82 +12,15 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 to-blue-100 min-h-screen">
+<body class="bg-gradient-to-br from-indigo-50 to-blue-100 min-h-screen pt-32">
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <!-- Top Bar: Logo, Contact Info & Social Media -->
-        <div class="bg-gray-50 border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-3">
-                    <!-- Logo & School Name -->
-                    <div class="flex items-center">
-                        <a href="{{ route('school.homepage', $school->slug) }}" class="text-lg font-extrabold text-indigo-600 hover:text-indigo-700 transition duration-300">
-                            {{ $school->name }}
-                        </a>
-                    </div>
+      @include('frontend.partials.navbar')
 
-                    <!-- Social Media Icons -->
-                    <div class="hidden md:flex items-center gap-3">
-                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" title="Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" title="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" title="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" title="YouTube">
-                                <i class="fab fa-youtube"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Bar: Navigation Menu -->
-        <div class="bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="{{ route('school.homepage', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-home mr-1"></i>Beranda
-                        </a>
-                     </a>
-                        <a href="{{ route('posts', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-newspaper mr-1"></i>Berita
-                        </a>
-                        <a href="{{ route('teachers', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-users mr-1"></i>Guru
-                        </a>
-                        <a href="{{ route('gallery', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-images mr-1"></i>Galeri
-                        </a>
-                        <a href="{{ route('facilities', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-building mr-1"></i>Fasilitas
-                        </a>
-                        <a href="{{ route('facilities', $school->slug) }}" class="border-b-2 border-indigo-500 text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-building mr-1"></i>Fasilitas
-                        </a>
-                        <a href="{{ route('registration', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-edit mr-1"></i>PPDB
-                        </a>
-                    </div>
-
-                    <div class="flex sm:items-center">
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 px-4 py-2 rounded-lg shadow-sm transition duration-300 transform hover:scale-105">
-                            <i class="fas fa-user-shield mr-1"></i> Login Admin
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white py-20 relative overflow-hidden">
+    <div class="relative w-full h-80 flex items-center justify-center text-white"
+    style="background-color: {{ $settings['secondary_color'] ?? '#000000' }};">
         <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full -mr-48 -mt-48 opacity-20"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-cyan-600 rounded-full -ml-32 -mb-32 opacity-20"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -149,10 +82,10 @@
                             <div class="text-5xl font-extrabold text-blue-600 mb-3">{{ $facilities->count() }}</div>
                             <div class="text-gray-700 font-medium">Total Fasilitas</div>
                         </div>
-                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-xl text-center border-2 border-indigo-200">
+                        {{-- <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-xl text-center border-2 border-indigo-200">
                             <div class="text-5xl font-extrabold text-indigo-600 mb-3">{{ $facilities->pluck('type')->unique()->count() }}</div>
                             <div class="text-gray-700 font-medium">Jenis Fasilitas</div>
-                        </div>
+                        </div> --}}
                         <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 p-8 rounded-xl text-center border-2 border-cyan-200">
                             <div class="text-5xl font-extrabold text-cyan-600 mb-3">{{ $facilities->whereNotNull('photo_url')->count() }}</div>
                             <div class="text-gray-700 font-medium">Dengan Foto</div>
@@ -179,31 +112,68 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold text-white mb-3 flex items-center">
-                            {{ $school->name }}
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Portal informasi resmi yang menyediakan berita, data guru dan siswa, serta fasilitas sekolah.</p>
+    <footer class="bg-gray-900 text-gray-300 w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-10">
+            
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-school text-2xl text-indigo-500"></i>
+                    <h3 class="text-xl font-bold text-white uppercase">{{ $school->name }}</h3>
                 </div>
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">Navigasi Cepat</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('school.homepage', $school->slug) }}" class="text-gray-400 hover:text-blue-400 transition">Beranda</a></li>
-                        <li><a href="{{ route('posts', $school->slug) }}" class="text-gray-400 hover:text-blue-400 transition">Berita</a></li>
-                        <li><a href="{{ route('teachers', $school->slug) }}" class="text-gray-400 hover:text-blue-400 transition">Guru</a></li>
-                        <li><a href="{{ route('gallery', $school->slug) }}" class="text-gray-400 hover:text-blue-400 transition">Galeri</a></li>
-                    </ul>
+                <p class="text-sm leading-relaxed text-gray-400">
+                    Website sekolah ini dibuat dalam rangka meningkatkan akses informasi, mempererat interaksi, publikasi, transparansi, dan digitalisasi layanan.
+                </p>
+                @if($school->profile && $school->profile->address)
+                <div class="flex items-start gap-3 text-sm border-t border-gray-800 pt-4">
+                    <i class="fas fa-map-marker-alt text-indigo-500 mt-1"></i>
+                    <p>{{ $school->profile->address }}</p>
+                </div>
+                @endif
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-6 border-b border-gray-800 pb-2">Navigasi Cepat</h4>
+                <ul class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                    <li><a href="{{ route('school.homepage', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Beranda</a></li>
+                    <li><a href="{{ route('posts', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Berita</a></li>
+                    <li><a href="{{ route('teachers', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Guru</a></li>
+                    <li><a href="{{ route('gallery', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Galeri</a></li>
+                    <li><a href="{{ route('facilities', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Fasilitas</a></li>
+                    <li><a href="{{ route('extracurriculars', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Ekstrakurikuler</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-6 border-b border-gray-800 pb-2">Kontak Kami</h4>
+                <div class="space-y-4 text-sm">
+                    @if($school->profile && $school->profile->contact_email)
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-envelope text-indigo-500"></i>
+                        </div>
+                        <span>{{ $school->profile->contact_email }}</span>
+                    </div>
+                    @endif
+
+                    @if($school->profile && $school->profile->contact_phone)
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-phone text-indigo-500"></i>
+                        </div>
+                        <span>{{ $school->profile->contact_phone }}</span>
+                    </div>
+                    @endif
                 </div>
             </div>
-            <hr class="border-gray-700 mb-6">
-            <div class="text-center text-sm text-gray-500">
-                <p>&copy; {{ date('Y') }} <span class="text-blue-400 font-semibold">{{ $school->name }}</span> | CMS Sekolah Kita | Powered by Laravel & Filament</p>
-            </div>
+
         </div>
-    </footer>
+
+        <div class="border-t border-gray-800 pt-8 mt-8 text-center text-xs text-gray-500">
+            <p>&copy; {{ date('Y') }} <span class="text-indigo-500 font-semibold">{{ $school->name }}</span> | CMS Padamu Negeri</p>
+        </div>
+    </div>
+</footer>
 
     <!-- WhatsApp Contact Overlay -->
     @if($school->profile && $school->profile->contact_phone)

@@ -34,36 +34,34 @@ class RegisteredUserController extends Controller
     {
         // Validasi: sekarang termasuk input 'slug' manual
         $request->validate([
-            'school_name' => ['required', 'string', 'max:255', 'unique:schools,name'],
-            'slug' => ['required', 'string', 'max:255', 'unique:schools,slug', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'], // Slug harus unik dan formatnya benar
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+    // Sesuaikan dengan name="" yang ada di file register.blade.php Anda
+    'name' => ['required', 'string', 'max:255'], 
+    'npsn' => ['nullable', 'string', 'max:8', 'unique:schools,npsn'], // Tambahkan NPSN
+    'slug' => ['required', 'string', 'max:255', 'unique:schools,slug', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'],
+    'admin_name' => ['required', 'string', 'max:255'], 
+    'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+    'password' => ['required', 'confirmed', Rules\Password::defaults()],
+]);
 
         // Menggunakan transaksi untuk memastikan kedua operasi (School & User) sukses atau gagal bersamaan
         $user = DB::transaction(function () use ($request) {
-            
-            $schoolSlug = $request->slug; // Ambil slug langsung dari input form
+    // 1. Buat Sekolah
+    $school = School::create([
+        'name' => $request->name, // Ambil dari input "Nama Sekolah"
+        'npsn' => $request->npsn, // Pastikan kolom npsn ada di DB
+        'slug' => $request->slug,
+        'is_active' => true,
+    ]);
 
-            // --- 1. Buat Tenant (Sekolah) BARU ---
-            $school = School::create([
-                'name' => $request->school_name,
-                'slug' => $schoolSlug, // Nilai slug diambil langsung, dijamin ada
-                'is_active' => true,
-            ]);
-
-            // --- 2. Buat User (Admin Sekolah) ---
-            return User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                
-                // Kaitkan pengguna dengan tenant yang baru dibuat
-                'school_id' => $school->id, 
-                'role' => 'admin_sekolah',
-            ]);
-        });
+    // 2. Buat User Admin
+    return User::create([
+        'name' => $request->admin_name, // Ambil dari input "Nama Admin"
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'school_id' => $school->id, 
+        'role' => 'admin_sekolah',
+    ]);
+});
 
         event(new Registered($user));
         Auth::login($user);

@@ -30,13 +30,17 @@ class StudentResource extends Resource
     }
 
     public static function getEloquentQuery(): Builder
-    {
-        $user = auth()->user();
-        if ($user instanceof User && $user->isSuperAdmin()) {
-            return parent::getEloquentQuery();
-        }
-        return parent::getEloquentQuery(); // Global Scope di Model Student akan memfilter
+{
+    $user = auth()->user();
+
+    // Jika user adalah admin_pusat, jangan filter data berdasarkan sekolah
+    if ($user && $user->role === 'admin_pusat') {
+        return parent::getEloquentQuery()->withoutGlobalScopes(); 
     }
+
+    // Untuk admin sekolah biasa, tetap tampilkan data sekolahnya saja
+    return parent::getEloquentQuery();
+}
 
     // Otorisasi Edit/Hapus (wajib)
     public static function canEdit(Model $record): bool
@@ -101,12 +105,12 @@ class StudentResource extends Resource
                     ->label('NISN'),
                 Tables\Columns\TextColumn::make('class')
                     ->label('Kelas'),
+                // Di dalam StudentResource/TeacherResource/EskulResource
                 Tables\Columns\TextColumn::make('school.name')
-                    ->visible(function () {
-                        $user = auth()->user();
-                        return $user instanceof User && $user->isSuperAdmin();
-                    })
                     ->label('Sekolah Terkait')
+                    ->visible(fn () => auth()->user()->role === 'admin_pusat') // Hanya muncul untuk Admin Pusat
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

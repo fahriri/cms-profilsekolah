@@ -11,7 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
 class SubjectResource extends Resource
@@ -22,9 +21,15 @@ class SubjectResource extends Resource
 
 public static function getEloquentQuery(): Builder
 {
-    // Hanya mengambil data yang school_id nya sama dengan sekolah admin yang login
-    return parent::getEloquentQuery()
-        ->where('school_id', auth()->user()->school_id);
+    $user = auth()->user();
+    
+    // Jika admin_pusat, biarkan melihat semua
+    if ($user->role === 'admin_pusat') {
+        return parent::getEloquentQuery();
+    }
+
+    // Jika bukan admin_pusat, PAKSA filter berdasarkan school_id user
+    return parent::getEloquentQuery()->where('school_id', $user->school_id);
 }
 
 public static function form(Form $form): Form
@@ -53,6 +58,12 @@ public static function table(Table $table): Table
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->label('Dibuat Pada'),
+            // Di dalam StudentResource/TeacherResource/EskulResource
+            Tables\Columns\TextColumn::make('school.name')
+                ->label('Sekolah Terkait')
+                ->visible(fn () => auth()->user()->role === 'admin_pusat') // Hanya muncul untuk Admin Pusat
+                ->sortable()
+                ->searchable(),
         ])
         ->filters([
             //

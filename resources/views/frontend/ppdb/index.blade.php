@@ -8,47 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen pt-32">
 
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="bg-gray-50 border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-3">
-                    <div class="flex items-center">
-                        <a href="{{ route('school.homepage', $school->slug) }}" class="text-lg font-extrabold text-indigo-600 hover:text-indigo-700 transition duration-300">
-                            {{ $school->name }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="{{ route('school.homepage', $school->slug) }}" class="text-gray-700 hover:text-indigo-600 px-1 pt-1 text-sm font-medium"><i class="fas fa-home mr-1"></i>Beranda</a>
-            
-                        <a href="{{ route('posts', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-newspaper mr-1"></i>Berita
-                        </a>
-                        <a href="{{ route('teachers', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-users mr-1"></i>Guru
-                        </a>
-                        <a href="{{ route('gallery', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-images mr-1"></i>Galeri
-                        </a>
-                        <a href="{{ route('facilities', $school->slug) }}" class="border-b-2 border-transparent text-gray-700 hover:border-indigo-500 hover:text-indigo-600 inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">
-                            <i class="fas fa-building mr-1"></i>Fasilitas
-                        </a>
-                        
-                        <a href="{{ route('registration', $school->slug) }}" class="border-b-2 border-indigo-500 text-indigo-600 px-1 pt-1 text-sm font-medium"><i class="fas fa-edit mr-1"></i>PPDB</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-16 text-center">
+     @include('frontend.partials.navbar')
+    <div
+    class="text-white py-16 text-center"
+    style="background-color: {{ $settings['secondary_color'] ?? '#000000' }};">
         <h1 class="text-4xl font-extrabold uppercase">Formulir PPDB Online</h1>
         <p class="mt-2 text-indigo-100">Lengkapi seluruh data di bawah ini untuk mendaftar di {{ $school->name }}</p>
     </div>
@@ -221,5 +186,67 @@
             </form>
         </div>
     </div>
+   <footer class="bg-gray-900 text-gray-300 w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-10">
+            
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-school text-2xl text-indigo-500"></i>
+                    <h3 class="text-xl font-bold text-white uppercase">{{ $school->name }}</h3>
+                </div>
+                <p class="text-sm leading-relaxed text-gray-400">
+                    Website sekolah ini dibuat dalam rangka meningkatkan akses informasi, mempererat interaksi, publikasi, transparansi, dan digitalisasi layanan.
+                </p>
+                @if($school->profile && $school->profile->address)
+                <div class="flex items-start gap-3 text-sm border-t border-gray-800 pt-4">
+                    <i class="fas fa-map-marker-alt text-indigo-500 mt-1"></i>
+                    <p>{{ $school->profile->address }}</p>
+                </div>
+                @endif
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-6 border-b border-gray-800 pb-2">Navigasi Cepat</h4>
+                <ul class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                    <li><a href="{{ route('school.homepage', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Beranda</a></li>
+                    <li><a href="{{ route('posts', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Berita</a></li>
+                    <li><a href="{{ route('teachers', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Guru</a></li>
+                    <li><a href="{{ route('gallery', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Galeri</a></li>
+                    <li><a href="{{ route('facilities', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Fasilitas</a></li>
+                    <li><a href="{{ route('extracurriculars', $school->slug) }}" class="hover:text-indigo-400 transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Ekstrakurikuler</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-6 border-b border-gray-800 pb-2">Kontak Kami</h4>
+                <div class="space-y-4 text-sm">
+                    @if($school->profile && $school->profile->contact_email)
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-envelope text-indigo-500"></i>
+                        </div>
+                        <span>{{ $school->profile->contact_email }}</span>
+                    </div>
+                    @endif
+
+                    @if($school->profile && $school->profile->contact_phone)
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-phone text-indigo-500"></i>
+                        </div>
+                        <span>{{ $school->profile->contact_phone }}</span>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-t border-gray-800 pt-8 mt-8 text-center text-xs text-gray-500">
+            <p>&copy; {{ date('Y') }} <span class="text-indigo-500 font-semibold">{{ $school->name }}</span> | CMS Padamu Negeri</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Setting;
 
 class SchoolResource extends Resource
 {
@@ -180,6 +181,26 @@ class SchoolResource extends Resource
                 ]),
             ]);
     }
+    protected static function booted()
+{
+    static::created(function ($school) {
+
+        $defaults = [
+            'primary_color'   => '#4F46E5',
+            'secondary_color' => '#7C3AED',
+            'navbar_color'    => '#FFFFFF',
+            'footer_color'    => '#111827',
+        ];
+
+        foreach ($defaults as $key => $value) {
+            Setting::create([
+                'school_id' => $school->id,
+                'key'       => $key,
+                'value'     => $value,
+            ]);
+        }
+    });
+}
     
     public static function getEloquentQuery(): Builder
     {

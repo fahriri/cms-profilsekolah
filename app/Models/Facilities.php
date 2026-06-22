@@ -16,4 +16,10 @@ class Facilities extends Model
         'description',
         'photo_url',
     ];
+
+    // app/Models/Student.php
+public function school()
+{
+    return $this->belongsTo(School::class);
+}
 }

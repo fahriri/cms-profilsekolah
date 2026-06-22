@@ -17,6 +17,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class RegistrationResource extends Resource
 {
@@ -24,6 +26,18 @@ class RegistrationResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationLabel = 'Pendaftaran PPDB';
 
+    public static function getEloquentQuery(): Builder
+{
+    $user = auth()->user();
+
+    // Jika user adalah admin_pusat, jangan filter data berdasarkan sekolah
+    if ($user && $user->role === 'admin_pusat') {
+        return parent::getEloquentQuery()->withoutGlobalScopes(); 
+    }
+
+    // Untuk admin sekolah biasa, tetap tampilkan data sekolahnya saja
+    return parent::getEloquentQuery();
+}
     public static function form(Form $form): Form
     {
         return $form
@@ -109,6 +123,12 @@ class RegistrationResource extends Resource
                         'rejected' => 'danger',
                         default => 'gray',
                     }),
+                // Di dalam StudentResource/TeacherResource/EskulResource
+                Tables\Columns\TextColumn::make('school.name')
+                    ->label('Sekolah Terkait')
+                    ->visible(fn () => auth()->user()->role === 'admin_pusat') // Hanya muncul untuk Admin Pusat
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Tgl Daftar')->dateTime('d M Y'),
             ])
             ->actions([

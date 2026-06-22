@@ -22,4 +22,10 @@ class Gallery extends Model
         // UBAH DARI photo_url MENJADI file_path agar mendukung multiple upload
         'file_path' => 'array', 
     ];
+
+    // app/Models/Student.php
+public function school()
+{
+    return $this->belongsTo(School::class);
+}   
 }

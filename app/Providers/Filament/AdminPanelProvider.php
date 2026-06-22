@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -26,10 +27,17 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            // --- PENGATURAN TAMPILAN LOGIN & BRANDING ---
+            ->login() 
+            ->brandName('CMS Padamu Negeri') // Mengubah teks "Laravel" di login
+            // ->brandLogo(null) // Isi dengan asset('images/logo.png') jika sudah ada logo
+            ->favicon(asset('favicon.ico'))
+            ->font('Poppins') // Membuat tampilan teks lebih modern
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Amber, // Tetap menggunakan warna Amber sesuai keinginan Anda
             ])
+            // -----------------------------------------------------------------
+            
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -54,5 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+            
     }
 }

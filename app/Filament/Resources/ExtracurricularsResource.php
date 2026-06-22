@@ -17,7 +17,7 @@ class ExtracurricularsResource extends Resource
 {
     protected static ?string $model = extracurriculars::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-    protected static ?string $navigationGroup = 'Kegiatan Sekolah';
+    // protected static ?string $navigationGroup = 'Kegiatan Sekolah';
     protected static ?string $modelLabel = 'Daftar Ekstrakurikuler';
     protected static ?string $pluralModelLabel = 'Daftar Ekstrakurikuler'; // (Label Jamak yang benar
     public static function canViewAny(): bool

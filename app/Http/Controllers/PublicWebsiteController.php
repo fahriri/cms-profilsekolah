@@ -10,50 +10,72 @@ use App\Models\Gallery;
 use App\Models\Facilities;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-
+use App\Models\Menu;
+use App\Models\Section;
+use App\Models\Setting;
 class PublicWebsiteController extends Controller
 {
     /**
      * Dapatkan objek School saat ini dari Service Container dengan pengecekan aman.
      */
-    protected function getCurrentSchool(): ?School
-    {
-        // SOLUSI: Cek apakah binding 'currentSchool' ada sebelum mencoba mengambilnya.
-        if (app()->has('currentSchool')) {
-            // Jika ada, ambil dan kembalikan sebagai objek School
-            return app('currentSchool');
-        }
+protected function getCurrentSchool(): ?School
+{
+    if (app()->has('currentSchool')) {
 
-        // Jika tidak ada (karena ini localhost atau domain utama), kembalikan NULL
-        return null;
+        $school = app('currentSchool');
+
+        $school->load('profile');
+
+        $settings = Setting::where('school_id', $school->id)
+            ->pluck('value', 'key');
+
+        view()->share('settings', $settings);
+
+        return $school;
     }
+
+    return null;
+}
 
     /**
      * Tampilkan Homepage Profil Sekolah atau Landing Page Platform.
      */
-   public function index(): View
+ public function index(): View
 {
     $school = $this->getCurrentSchool();
+    $menus = Menu::where('school_id', $school->id)
+            ->where('is_active', 1)
+            ->orderBy('position')
+            ->get();
+
+    $sections = Section::where('school_id', $school->id)
+            ->where('is_active', 1)
+            ->orderBy('position')
+            ->get();
+
+    $settings = Setting::where('school_id', $school->id)
+            ->pluck('value', 'key');
+        
     if (!$school) return view('landing');
 
+    // Seluruh data FRONTEND wajib difilter berdasarkan $school->id
     $posts = Post::where('school_id', $school->id)->limit(3)->get();
-    
-    // PERBAIKAN: Gunakan with('subject') untuk eager loading
     $teachers = Teacher::with('subject')->where('school_id', $school->id)->get();
-    
     $students = \App\Models\Student::where('school_id', $school->id)->get();
+    $schoolProfile = \App\Models\SchoolProfile::where('school_id', $school->id)->first();
+    
+    // Perbaikan Error Undefined Variable
+    $facilities = \App\Models\Facilities::where('school_id', $school->id)->get();
     $subjects = \App\Models\Subject::where('school_id', $school->id)->get();
-    $totalSubjects = $subjects->count();
-
     $extracurriculars = \App\Models\Extracurriculars::where('school_id', $school->id)->get();
+
+    $totalSubjects = $subjects->count();
     $totalEskul = $extracurriculars->count();
 
-    $schoolProfile = $school->profile;
-    $facilities = Facilities::where('school_id', $school->id)->get();
-
+    // Pastikan semua variabel dimasukkan ke compact
     return view('frontend.homepage', compact(
-        'school', 'posts', 'teachers', 'students', 
-        'schoolProfile', 'facilities', 'subjects', 'totalSubjects', 'totalEskul'
+        'school', 'schoolProfile', 'posts', 'teachers', 'students', 
+        'facilities', 'subjects', 'totalSubjects', 'totalEskul', 'menus', 'sections', 'settings'
     ));
 }
 
@@ -64,6 +86,7 @@ class PublicWebsiteController extends Controller
     {
         $school = $this->getCurrentSchool();
         
+
         // Pastikan school ada sebelum mengambil data
         if (!$school) {
             return view('errors.tenant-not-found'); // Kita belum buat view ini, tapi ini lebih baik
@@ -132,16 +155,31 @@ class PublicWebsiteController extends Controller
     /**
      * Tampilkan Daftar Ekstrakurikuler.
      */
-    public function showExtracurriculars(): View
-    {
-        $school = $this->getCurrentSchool();
-        if (!$school) {
-            return view('errors.tenant-not-found');
-        }
+public function showExtracurriculars(): View
+{
+    $school = $this->getCurrentSchool();
 
-        $extracurriculars = \App\Models\Extracurriculars::where('school_id', $school->id)->get();
-        return view('frontend.extracurriculars.index', compact('school', 'extracurriculars'));
+    if (!$school) {
+        return view('errors.tenant-not-found');
     }
+
+    $settings = Setting::where('school_id', $school->id)
+        ->pluck('value', 'key');
+
+    $extracurriculars = \App\Models\Extracurriculars::where(
+        'school_id',
+        $school->id
+    )->get();
+
+    return view(
+        'frontend.extracurriculars.index',
+        compact(
+            'school',
+            'extracurriculars',
+            'settings'
+        )
+    );
+}
 
     /**
      * Tampilkan Daftar Acara.
@@ -160,10 +198,9 @@ class PublicWebsiteController extends Controller
     public function showPpdbRegistrations($schoolSlug)
     {
         // Mengambil data sekolah berdasarkan slug di URL
-        $school = \App\Models\School::where('slug', $schoolSlug)->firstOrFail();
+    $school = $this->getCurrentSchool();
 
-        // Pastikan file ini ada di: resources/views/frontend/ppdb/index.blade.php
-        return view('frontend.ppdb.index', compact('school'));
+    return view('frontend.ppdb.index', compact('school'));
     }
         
     public function storePpdb(Request $request, $schoolSlug)

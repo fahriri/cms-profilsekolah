@@ -140,8 +140,7 @@ class TeacherResource extends Resource
                 // Menampilkan nama Mata Pelajaran dari relasi di tabel
                 Tables\Columns\TextColumn::make('subject.name')
                     ->label('Mata Pelajaran'),
-                Tables\Columns\TextColumn::make('position')
-                    ->label('Jabatan'),
+               
                 Tables\Columns\TextColumn::make('school.name')
                     ->visible(function () {
                         $user = auth()->user();
