@@ -100,6 +100,22 @@ Bagian ini menampilkan hasil implementasi aplikasi dari sisi admin panel dan web
 
 ![School Information](screenshots/prof.png)
 
+### CMS Homepage
+
+![School Information](screenshots/home-cms.png)
+
+
+### School Homepage
+
+![School Homepage](screenshots/home-cms.png)
+
+
+### Dashboard Information School Profile
+
+![Dashboard School](screenshots/dashanal.png)
+![Dashboard School](screenshots/dashanal2.png)
+
+
 
 ## 5. Technology Stack
 
@@ -147,7 +163,7 @@ Entitas utama yang mendukung implementasi sistem meliputi:
 - Subject
 - Registration
 
-![System Architecture](screenshots/system-architecture.png)
+![System Architecture](screenshots/multit.png)
 
 ## 7. Database Design (ERD)
 
@@ -165,7 +181,7 @@ Beberapa entitas utama yang digunakan antara lain:
 - **Subject:** Menyimpan data mata pelajaran.
 - **Registration:** Menyimpan data pendaftaran peserta didik baru.
 
-![Entity Relationship Diagram](screenshots/erd.png)
+![Entity Relationship Diagram](screenshots/erd-cms.png)
 
 ## 8. Testing
 
