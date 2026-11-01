@@ -24,7 +24,7 @@ class RegistrationResource extends Resource
 {
     protected static ?string $model = Registration::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
-    protected static ?string $navigationLabel = 'Pendaftaran PPDB';
+    protected static ?string $navigationLabel = 'PPDB';
 
     public static function getEloquentQuery(): Builder
 {

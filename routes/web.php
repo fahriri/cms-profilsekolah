@@ -16,7 +16,6 @@ use App\Http\Controllers\SectionController; // tambahin di atas
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Route bawaan Breeze setelah login (Anda bisa menggantinya ke /admin jika mau)
     Route::view('/dashboard', 'dashboard')->name('dashboard'); 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -57,7 +56,6 @@ Route::middleware(['web'])->group(function () {
             Route::get('/ppdb', 'showPpdbRegistrations')->name('registration');
             Route::post('/ppdb', 'storePpdb')->name('registration.store');      // Mengirim Form
             
-            // Homepage Sekolah (selalu di akhir group)
             Route::get('/', 'index')->name('school.homepage');
         });
     });

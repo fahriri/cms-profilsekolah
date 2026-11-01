@@ -35,7 +35,7 @@ $settings = Setting::where('school_id', $school->id)
                         <a href="{{ route('school.homepage', $school->slug) }}" class="flex items-center gap-3 group">
                             @if($school->profile && $school->profile->logo_url)
                                 {{-- Menampilkan logo dari storage sekolah yang bersangkutan --}}
-                                <img src="{{ asset('storage/' . $school->profile->logo_url) }}" 
+                                <img src="{{ Storage::url($school->profile->logo_url) }}" 
                                     alt="Logo {{ $school->name }}" 
                                     class="h-10 w-10 object-contain transition duration-300 group-hover:scale-110">
                             @else

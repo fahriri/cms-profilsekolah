@@ -45,7 +45,7 @@
                         <div>
                             <label class="block text-sm font-bold mb-2">Jalur Pendaftaran *</label>
                             <select name="registration_path" class="w-full border rounded-xl p-3 bg-gray-50" required>
-                                <option value="Zonasi">Umum</option>
+                                <option value="Umum">Umum</option>
                                 <option value="Prestasi">Prestasi</option>
                             </select>
                         </div>

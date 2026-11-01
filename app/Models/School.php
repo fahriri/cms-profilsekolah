@@ -14,16 +14,10 @@ class School extends Model
     protected $fillable = [
         'name',
         'slug',
-        'npsn',      // Sudah ditambahkan
-        'address',
-        'logo_url',  // Tambahan jika perlu
+        'npsn',
+        'is_active',
     ];
 
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
-    
     public function admin(): HasOne
     {
         return $this->hasOne(User::class, 'school_id')

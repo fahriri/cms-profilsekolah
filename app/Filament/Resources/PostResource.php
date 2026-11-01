@@ -17,7 +17,7 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $pluralModelLabel = 'Post'; // (Label Jamak yang benar)
+    protected static ?string $pluralModelLabel = 'Berita';
 
     // --- FILAMENT RESOURCE DEFINITIONS (FORM, TABLE, ETC.) ---
 

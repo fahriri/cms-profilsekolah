@@ -99,11 +99,11 @@ class SchoolProfilesResource extends Resource
 
                 Forms\Components\FileUpload::make('logo_url')
                     ->label('Logo Sekolah')
-                    ->image() // Memastikan file yang diunggah adalah gambar
-                    ->directory('school-logos') // Menyimpan di folder storage/app/public/school-logos
-                    ->maxSize(1024) // Batas 1MB
-                    ->required(false),
-                
+                    ->image()
+                    ->disk('public')
+                    ->directory('school-logos')
+                    ->visibility('public'),
+                    
                 Forms\Components\RichEditor::make('mission')
                     ->label('Misi Sekolah')
                     ->required()
@@ -141,13 +141,14 @@ class SchoolProfilesResource extends Resource
                             ->maxLength(255)
                             ->label('Nama Kepala Sekolah'),
                             
+                        
                         Forms\Components\FileUpload::make('principal_photo_url')
                             ->label('Foto Kepala Sekolah')
                             ->image()
                             ->disk('public')
                             ->directory('principal-photos')
-                            ->nullable(),
-                            
+                            ->visibility('public'),
+                                                        
                         Forms\Components\RichEditor::make('principal_welcome_message')
                             ->label('Pesan Sambutan Kepala Sekolah')
                             ->columnSpanFull(),

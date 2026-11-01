@@ -26,11 +26,6 @@ protected function getCurrentSchool(): ?School
 
         $school->load('profile');
 
-        $settings = Setting::where('school_id', $school->id)
-            ->pluck('value', 'key');
-
-        view()->share('settings', $settings);
-
         return $school;
     }
 
@@ -40,7 +35,7 @@ protected function getCurrentSchool(): ?School
     /**
      * Tampilkan Homepage Profil Sekolah atau Landing Page Platform.
      */
- public function index(): View
+public function index(): View
 {
     $school = $this->getCurrentSchool();
     $menus = Menu::where('school_id', $school->id)
@@ -58,21 +53,16 @@ protected function getCurrentSchool(): ?School
         
     if (!$school) return view('landing');
 
-    // Seluruh data FRONTEND wajib difilter berdasarkan $school->id
     $posts = Post::where('school_id', $school->id)->limit(3)->get();
     $teachers = Teacher::with('subject')->where('school_id', $school->id)->get();
     $students = \App\Models\Student::where('school_id', $school->id)->get();
     $schoolProfile = \App\Models\SchoolProfile::where('school_id', $school->id)->first();
-    
-    // Perbaikan Error Undefined Variable
     $facilities = \App\Models\Facilities::where('school_id', $school->id)->get();
     $subjects = \App\Models\Subject::where('school_id', $school->id)->get();
     $extracurriculars = \App\Models\Extracurriculars::where('school_id', $school->id)->get();
-
     $totalSubjects = $subjects->count();
     $totalEskul = $extracurriculars->count();
 
-    // Pastikan semua variabel dimasukkan ke compact
     return view('frontend.homepage', compact(
         'school', 'schoolProfile', 'posts', 'teachers', 'students', 
         'facilities', 'subjects', 'totalSubjects', 'totalEskul', 'menus', 'sections', 'settings'
@@ -148,7 +138,8 @@ protected function getCurrentSchool(): ?School
             return view('errors.tenant-not-found');
         }
 
-        $facilities = \App\Models\Facilities::where('school_id', $school->id)->get();
+        $facilities = \App\Models\Facilities::where('school_id', $school->id)
+                    ->get();
         return view('frontend.facilities.index', compact('school', 'facilities'));
     }
 

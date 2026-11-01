@@ -19,7 +19,7 @@ class SettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-paint-brush';
 
-    protected static ?string $navigationLabel = 'Website Settings';
+    protected static ?string $navigationLabel = 'Website Color';
 
     protected static ?string $navigationGroup = 'Website';
 

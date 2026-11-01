@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use BelongsToTenant; // <<< Terapkan Trait di sini
+    use BelongsToTenant; 
     protected $fillable = ['school_id', 'title', 'content','photo_url'];
 
-    // app/Models/Student.php
-public function school()
-{
-    return $this->belongsTo(School::class);
-}
+    
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
 }
