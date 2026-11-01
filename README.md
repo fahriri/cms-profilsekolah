@@ -81,25 +81,25 @@ Mengimplementasikan pengaturan konten dan tampilan website melalui admin panel s
 
 Bagian ini menampilkan hasil implementasi aplikasi dari sisi admin panel dan website publik.
 
-### Admin Dashboard
+### Dashboard Admin Sekolah
 
-![Admin Dashboard](screenshots/dashboard.png)
+![Admin Dashboard](screenshots/dash.png)
 
-### School Management
+### Content Management
 
-![School Management](screenshots/school-management.png)
+![CRUD Content](screenshots/cruddata.png)
 
-### Data Management
+### Website Customization
 
-![Data Management](screenshots/data-management.png)
+![Custome Menu Navbar](screenshots/nav.png)
+![Custome Section Homepage](screenshots/sec.png)
+![Custome Website Color](screenshots/col.png)
 
-### School Profile Configuration
 
-![School Profile Configuration](screenshots/school-settings.png)
+### School Information
 
-### Public Website
+![School Information](screenshots/prof.png)
 
-![Public Website](screenshots/public-website.png)
 
 ## 5. Technology Stack
 
