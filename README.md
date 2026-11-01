@@ -1,66 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CMS Profil Sekolah Berbasis Web (Multi-Tenant)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi **Content Management System (CMS) Profil Sekolah** berbasis web yang dikembangkan untuk memudahkan sekolah dalam mengelola dan mempublikasikan informasi profil sekolah secara mandiri melalui satu platform terintegrasi.
 
-## About Laravel
+Sistem ini menerapkan konsep **Multi-Tenant Architecture**, yang memungkinkan beberapa sekolah menggunakan satu platform CMS dengan pengelolaan dan pemisahan data masing-masing sekolah.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi dikembangkan menggunakan Laravel dengan mencakup implementasi backend dan frontend. Fokus utama pengembangan terletak pada **Backend Development**, meliputi perancangan database, implementasi logika aplikasi, pengelolaan data, manajemen hak akses, serta penerapan mekanisme pemisahan data antar sekolah.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 1. Project Overview
 
-## Learning Laravel
+CMS Profil Sekolah dikembangkan sebagai solusi untuk membantu sekolah dalam mengelola informasi dan publikasi digital melalui satu platform terintegrasi.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Penyampaian informasi sekolah seperti profil, berita, kegiatan, fasilitas, tenaga pendidik, dan informasi Penerimaan Peserta Didik Baru (PPDB) membutuhkan media digital yang mudah diakses dan dikelola.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Melalui aplikasi ini, setiap sekolah dapat memiliki website profil yang dapat dikelola dan dikustomisasi melalui admin panel tanpa harus membangun website secara terpisah.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Project Information
 
-## Laravel Sponsors
+| Informasi | Keterangan |
+|---|---|
+| Project Type | Academic Project / Final Project |
+| Application Type | Web-Based Application |
+| Architecture | Multi-Tenant |
+| Development Method | Waterfall |
+| Development Scope | Full Web Application |
+| Main Focus | Backend Development |
+| Framework | Laravel |
+| Admin Panel | Filament |
+| Database | MySQL |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 2. Key Features
 
-### Premium Partners
+Berikut merupakan fitur utama yang dikembangkan dalam aplikasi:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Multi-Tenant Management:** Mendukung beberapa sekolah dalam satu platform dengan pemisahan data berdasarkan identitas sekolah.
+- **Role-Based Access Control:** Pembagian hak akses antara Super Admin dan Admin Sekolah.
+- **School Profile Management:** Pengelolaan informasi dan identitas profil sekolah.
+- **Content Management:** Pengelolaan berita, artikel, dan informasi kegiatan sekolah.
+- **Teacher Management:** Pengelolaan data tenaga pendidik.
+- **Subject Management:** Pengelolaan data mata pelajaran.
+- **PPDB Management:** Pengelolaan informasi dan data pendaftaran peserta didik baru.
+- **Website Customization:** Pengaturan tampilan website, termasuk warna, navigasi, dan footer.
+- **Public Website:** Menampilkan informasi sekolah kepada pengunjung melalui website publik.
 
-## Contributing
+## 3. Backend Implementation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Pengembangan backend menggunakan Laravel dengan arsitektur Model-View-Controller (MVC) dan Filament sebagai admin panel untuk pengelolaan data.
 
-## Code of Conduct
+Implementasi backend mencakup beberapa aspek berikut:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Multi-Tenant Architecture
 
-## Security Vulnerabilities
+Menerapkan konsep multi-tenant untuk memungkinkan beberapa sekolah menggunakan satu aplikasi CMS. Pemisahan data dilakukan berdasarkan `school_id` sehingga setiap sekolah memiliki ruang pengelolaan data masing-masing.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Role-Based Access Control
 
-## License
+Mengimplementasikan pembagian hak akses pengguna berdasarkan peran:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Super Admin:** Memiliki akses untuk mengelola data sekolah dan keseluruhan sistem.
+- **Admin Sekolah:** Memiliki akses untuk mengelola informasi dan konten website sekolah masing-masing.
+
+### Database Management
+
+Mengelola struktur dan relasi database menggunakan MySQL dan Eloquent ORM untuk mendukung hubungan antarentitas serta kebutuhan pengelolaan data aplikasi.
+
+### CRUD Operations
+
+Mengimplementasikan operasi Create, Read, Update, dan Delete pada modul pengelolaan data sekolah, profil sekolah, berita, guru, mata pelajaran, dan pengaturan website.
+
+### Data Filtering & Isolation
+
+Menerapkan pembatasan dan penyaringan data berdasarkan identitas sekolah menggunakan relasi dan mekanisme filtering pada aplikasi untuk menjaga pemisahan data antar-tenant.
+
+### Dynamic Website Configuration
+
+Mengimplementasikan pengaturan konten dan tampilan website melalui admin panel sehingga setiap sekolah dapat menyesuaikan identitas visual website masing-masing.
+
+## 4. Application Preview
+
+Bagian ini menampilkan hasil implementasi aplikasi dari sisi admin panel dan website publik.
+
+### Dashboard Admin Sekolah
+
+![Admin Dashboard](screenshots/dash.png)
+
+### Content Management
+
+![CRUD Content](screenshots/cruddata.png)
+
+### Website Customization
+
+![Custome Menu Navbar](screenshots/nav.png)
+![Custome Section Homepage](screenshots/sec.png)
+![Custome Website Color](screenshots/col.png)
+
+
+### School Information
+
+![School Information](screenshots/prof.png)
+
+
+## 5. Technology Stack
+
+Teknologi dan tools yang digunakan dalam pengembangan aplikasi:
+
+| Technology | Description |
+|---|---|
+| PHP | Backend Programming Language |
+| Laravel | Web Application Framework |
+| Filament | Admin Panel Development |
+| MySQL | Relational Database Management System |
+| Eloquent ORM | Database Interaction |
+| Blade | Server-Side Templating |
+| Tailwind CSS | UI Styling |
+| HTML | Web Structure |
+| CSS | Web Styling |
+| JavaScript | Frontend Interactivity |
+
+## 6. System Architecture
+
+Aplikasi menggunakan arsitektur **Model-View-Controller (MVC)** dari Laravel untuk memisahkan pengelolaan data, logika aplikasi, dan tampilan.
+
+Pada implementasi multi-tenant, setiap sekolah diidentifikasi melalui `school_id` sebagai dasar pemisahan dan pembatasan data.
+
+### Application Flow
+
+1. Pengguna mengakses admin panel atau website publik.
+2. Sistem mengidentifikasi pengguna atau sekolah berdasarkan konteks akses.
+3. Controller memproses permintaan dan menjalankan logika aplikasi.
+4. Model berinteraksi dengan database melalui Eloquent ORM.
+5. Data diproses sesuai hak akses dan identitas sekolah.
+6. Sistem mengembalikan hasil dalam bentuk tampilan admin panel atau website publik.
+
+### Multi-Tenant Architecture
+
+Setiap sekolah menggunakan satu platform CMS dengan data yang dikelola secara terpisah berdasarkan identitas tenant.
+
+Entitas utama yang mendukung implementasi sistem meliputi:
+
+- School
+- User
+- SchoolProfile
+- Teacher
+- Post
+- Subject
+- Registration
+
+![System Architecture](screenshots/system-architecture.png)
+
+## 7. Database Design (ERD)
+
+Perancangan database dilakukan menggunakan Entity Relationship Diagram (ERD) untuk menggambarkan struktur tabel, atribut, dan hubungan antarentitas dalam sistem.
+
+Database dirancang untuk mendukung kebutuhan pengelolaan data sekolah serta penerapan konsep multi-tenant.
+
+Beberapa entitas utama yang digunakan antara lain:
+
+- **School:** Menyimpan data identitas sekolah sebagai tenant.
+- **User:** Menyimpan data pengguna dan informasi hak akses.
+- **SchoolProfile:** Menyimpan informasi profil masing-masing sekolah.
+- **Teacher:** Menyimpan data tenaga pendidik.
+- **Post:** Menyimpan berita dan artikel sekolah.
+- **Subject:** Menyimpan data mata pelajaran.
+- **Registration:** Menyimpan data pendaftaran peserta didik baru.
+
+![Entity Relationship Diagram](screenshots/erd.png)
+
+## 8. Testing
+
+Pengujian sistem dilakukan menggunakan metode **Black Box Testing** untuk memastikan fungsi aplikasi berjalan sesuai kebutuhan dan menghasilkan output yang diharapkan.
+
+Pengujian difokuskan pada:
+
+- Pengujian fungsi login dan hak akses pengguna.
+- Pengujian operasi CRUD pada setiap modul.
+- Pengujian pengelolaan data berdasarkan identitas sekolah.
+- Pengujian validasi input pada form.
+- Pengujian fungsi pengaturan profil dan tampilan website.
+- Pengujian akses informasi pada website publik.
+
+---
+
+## Project Author
+
+**Fahri Rabani**
+
+Fresh Graduate – S1 Sistem Informasi, Universitas Mercu Buana.
+
+Project ini dikembangkan sebagai bagian dari penyelesaian studi S1 Sistem Informasi dengan fokus pada perancangan dan implementasi backend CMS Profil Sekolah berbasis web menggunakan Laravel.
+
+**Areas of Interest:** Backend Development, Web Development, Database Management, and System Analysis.
