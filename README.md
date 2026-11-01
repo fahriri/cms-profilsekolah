@@ -107,7 +107,7 @@ Bagian ini menampilkan hasil implementasi aplikasi dari sisi admin panel dan web
 
 ### School Homepage
 
-![School Homepage](screenshots/home-cms.png)
+![School Homepage](screenshots/profsekolah.png)
 
 
 ### Dashboard Information School Profile
